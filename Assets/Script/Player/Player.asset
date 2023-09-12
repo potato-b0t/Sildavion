@@ -20,4 +20,12 @@ MonoBehaviour:
     - name: 0
       armor: 0
   speed:
-    speedDefault: 10
+    speedDefault: 7.5
+  damageValue: 0
+  damage:
+    damage: 100
+    increment: 0
+    elementsDefault: 0
+  secondPlayer:
+    max_life: 0
+    LifeValue: 0

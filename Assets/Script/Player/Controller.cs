@@ -30,6 +30,10 @@ public class Controller : MonoBehaviour
         player.speed.setDefault();
         playerVisual = anim.GetComponent<Transform>();
         combatManager = GetComponent<CombatManager>();
+
+        player.damages += player.DamageDefault;
+
+
     }
     private void Update()
     {
@@ -83,7 +87,7 @@ public class Controller : MonoBehaviour
                 {
                     Vector2 difference = new Vector2(transform.position.x, transform.position.z) - new Vector2(enemy.position.x, enemy.position.z);
 
-                    playerVisual.eulerAngles = new Vector3(0, (Mathf.Atan2(-difference.x, -difference.y) * 180) / Mathf.PI, 0);
+                    playerVisual.eulerAngles = new Vector3(0, Mathf.Atan2(-difference.x, -difference.y) * 180 / Mathf.PI, 0);
                 }
             }
 
@@ -91,5 +95,4 @@ public class Controller : MonoBehaviour
             combatManager.Attack();
         }
     }
-
 }

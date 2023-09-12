@@ -7,14 +7,14 @@ public class DetectedEnemies : MonoBehaviour
     public List<Transform> enemies;
     private void OnTriggerEnter(Collider collider)
     {
-        if (collider.tag == "enemy")
+        if (collider.GetComponent<EnemyBase>() != null)
         {
             enemies.Add(collider.transform);
         }
     }
     private void OnTriggerExit(Collider collider)
     {
-        if (collider.tag == "enemy")
+        if (collider.GetComponent<EnemyBase>() != null)
         {
             enemies = enemies.FindAll(p => p != collider.transform);
         }

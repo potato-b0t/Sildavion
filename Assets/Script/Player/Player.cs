@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using UnityEngine;
 
 
@@ -7,13 +8,52 @@ using UnityEngine;
 public class Player : ScriptableObject
 {
 
+    #region Main Players Feactures
+    [Header("Main Player")]
     public Life life;
 
     public Armor armor;
 
     public speed speed;
 
+    public float damageValue;
+
+    public Damage damage = new Damage();
+
 #pragma warning disable IDE1006
+
+    [System.Serializable]
+    public delegate void Damages(List<EnemyBase> enemies);
+
+    public Damages damages;
+
+    [System.Serializable]
+    public delegate void Passives();
+    public Passives passives;
+
+    #endregion
+
+    #region Second Players Feactures
+
+    [Header("Second Player")]
+
+    public Life secondPlayer;
+
+    #endregion
+
+    #region General
+
+    public void DamageDefault(List<EnemyBase> enemies)
+
+    {
+        Debug.Log("yes");
+        enemies.ForEach(enemy =>
+        {
+            enemy.setDamage((int)Mathf.Round((damage.damage + damage.increment) * 0.25f), damage.elementsDefault);
+            Debug.Log(enemy.transform.name);
+        });
+    }
+
     public void setDamage(int damage, Elements type)
     {
         ElementArmor armorGetted = armor.find(type);
@@ -23,6 +63,8 @@ public class Player : ScriptableObject
 
         Debug.Log(life.LifeValue + " " + damage);
     }
+
+    #endregion
 
 }
 
@@ -63,7 +105,6 @@ public struct Life
     }
     public void SetNewLife(int newLife)
     {
-        Debug.Log(newLife);
         life -= newLife;
     }
     public void SetNewMaxLife(int newAddLife)
@@ -106,3 +147,17 @@ public struct speed
 
 }
 
+[System.Serializable]
+public struct Damage
+{
+    public float damage;
+    public float increment;
+    public Elements elementsDefault;
+
+    public Damage(float damage, Elements elements, float increment = 0)
+    {
+        this.damage = damage;
+        this.elementsDefault = elements;
+        this.increment = increment;
+    }
+}
